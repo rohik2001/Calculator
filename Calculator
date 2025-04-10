@@ -17,17 +17,22 @@ def calculate():
         entry.delete(0, tk.END)
         entry.insert(0, "Error")
 
+# Create main window
 root = tk.Tk()
-root.title("Calculator")
-root.geometry("300x400")
+root.title("Colorful Calculator")
+root.geometry("320x420")
+root.config(bg="#2e2e2e")
 root.resizable(False, False)
 
-entry = tk.Entry(root, font=("Arial", 24), borderwidth=2, relief="solid", justify="right")
+# Entry field
+entry = tk.Entry(root, font=("Arial", 24), bg="#1e1e1e", fg="white", borderwidth=2, relief="flat", justify="right")
 entry.pack(fill="both", padx=10, pady=10, ipady=10)
 
-buttons_frame = tk.Frame(root)
+# Frame for buttons
+buttons_frame = tk.Frame(root, bg="#2e2e2e")
 buttons_frame.pack()
 
+# Button layout
 buttons = [
     ['7', '8', '9', '/'],
     ['4', '5', '6', '*'],
@@ -36,18 +41,29 @@ buttons = [
     ['=']
 ]
 
+# Colors
+btn_bg = "#3e3e3e"
+btn_fg = "white"
+operator_bg = "#ff9500"
+clear_bg = "#ff3b30"
+equal_bg = "#34c759"
+
+# Create buttons
 for row in buttons:
-    row_frame = tk.Frame(buttons_frame)
+    row_frame = tk.Frame(buttons_frame, bg="#2e2e2e")
     row_frame.pack(expand=True, fill="both")
     for char in row:
         if char == 'C':
-            btn = tk.Button(row_frame, text=char, font=("Arial", 18), command=clear)
+            btn = tk.Button(row_frame, text=char, font=("Arial", 22), bg=clear_bg, fg="white", command=clear)
         elif char == '=':
-            btn = tk.Button(row_frame, text=char, font=("Arial", 18), command=calculate)
+            btn = tk.Button(row_frame, text=char, font=("Arial", 22), bg=equal_bg, fg="white", command=calculate)
+        elif char in ['+', '-', '*', '/']:
+            btn = tk.Button(row_frame, text=char, font=("Arial", 22), bg=operator_bg, fg="white")
+            btn.bind("<Button-1>", click)
         else:
-            btn = tk.Button(row_frame, text=char, font=("Arial", 18))
+            btn = tk.Button(row_frame, text=char, font=("Arial", 22), bg=btn_bg, fg=btn_fg)
             btn.bind("<Button-1>", click)
         btn.pack(side="left", expand=True, fill="both", padx=2, pady=2)
 
+# Run app
 root.mainloop()
-
